@@ -8,4 +8,3 @@ public:
 	std::string pw;
 private:
 };
-

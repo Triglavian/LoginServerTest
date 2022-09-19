@@ -4,9 +4,19 @@ ServerSocket::ServerSocket()
 {
 	serverAddr = new sockaddr_in();
 	clientAddr = new sockaddr_in();
-	listenSocket = new SOCKET;
+	listenSocket = new SOCKET();
 	cAddrSize = 0;
 	result = 0;
+}
+
+ServerSocket::~ServerSocket()
+{
+	if (serverAddr != nullptr) delete serverAddr;
+	if (clientAddr != nullptr) delete clientAddr;
+	if (listenSocket != nullptr) {
+		closesocket(*listenSocket);
+		delete listenSocket;
+	}
 }
 
 bool ServerSocket::IsInvalidSock()

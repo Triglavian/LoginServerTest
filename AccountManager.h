@@ -9,7 +9,7 @@ public:
 	AccountManager();
 	~AccountManager();
 	bool IsInvalidAcc(const AccountForm&);
-	AccountForm LogIn();
+	//AccountForm LogIn();
 	bool IsExistAcc();
 	bool Registration();
 private:

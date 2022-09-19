@@ -9,7 +9,11 @@ ClientSocket::ClientSocket()
 
 ClientSocket::~ClientSocket()
 {
-	if (socket != nullptr) delete socket;
+	std::cout << 1;
+	if (socket != nullptr) {
+		closesocket(*socket);
+		delete socket;
+	}
 	if (clientAddr != nullptr) delete clientAddr;
 }
 
@@ -24,9 +28,9 @@ bool ClientSocket::IsFailToAccept()
 	return *socket == INVALID_SOCKET;
 }
 
-sockaddr_in ClientSocket::GetSockAddr()	//get client ip address
+sockaddr_in* ClientSocket::GetSockAddr()	//get client ip address
 {
-	return *clientAddr;
+	return clientAddr;
 }
 
 template<typename DATA>

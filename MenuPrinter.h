@@ -1,11 +1,18 @@
 #pragma once
 #include <iostream>
+#include <functional>
+#include <array>
+#include "MenuId.h"
 
-class MenuPrinter 
+class MenuPrinter
 {
-	enum menuIndex {
-
-	};
-
+public:
+	MenuPrinter();
+	~MenuPrinter();
+	std::array<std::function<void(MenuPrinter&)>, MMAX> MenuList;
+private:
+	void PrintMainMenu();
+	void PrintRegistrationMenu();
+	void PrintLoginMenu();
 };
 

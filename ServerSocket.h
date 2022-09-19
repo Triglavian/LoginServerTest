@@ -6,6 +6,7 @@ class ServerSocket
 {
 public:
 	ServerSocket();
+	~ServerSocket();
 	bool IsInvalidSock();
 	bool IsUnbindedSocket();
 	bool IsWrongConnection();

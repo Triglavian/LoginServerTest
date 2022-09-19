@@ -18,7 +18,7 @@ bool AccountManager::IsInvalidAcc(const AccountForm& )
 	return false;
 }
 
-AccountForm AccountManager::LogIn()
-{
-	return ;
-}
+//AccountForm AccountManager::LogIn()
+//{
+//	return ;
+//}

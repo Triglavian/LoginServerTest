@@ -4,13 +4,17 @@ ServerBase::ServerBase()
 {
 	result = WSAStartup(MAKEWORD(2, 2), &wsaData);	//linker error
 	lSocket = new ServerSocket();
-	cSocket = new ClientSocket();
+	cSocket = nullptr;
+	ZeroMemory(addr, sizeof(addr));
+	menuHandler = new MenuHandler();
 }
 
 ServerBase::~ServerBase()
 {
 	if (lSocket != nullptr) delete lSocket;
 	if (cSocket != nullptr) delete cSocket;
+	if (menuHandler != nullptr) delete menuHandler;
+	WSACleanup();
 }
 
 void ServerBase::Run()	//run server
@@ -21,13 +25,12 @@ void ServerBase::Run()	//run server
 	}
 	while (1) 
 	{
-		cSocket->AcceptConnection(lSocket->GetSocket());
-		if (cSocket->IsFailToAccept()) 
-		{
-			std::cout << "accept() error" << std::endl;
-			return;
-		}
+		Connect();
 
+		while (1) {
+
+		}
+		Disconnect();
 	}
 }
 
@@ -70,4 +73,24 @@ bool ServerBase::Initialization()	//server initialization
 bool ServerBase::IsWSAStartFail()	//validate initialization
 {
 	return result != 0;
+}
+
+void ServerBase::Connect()
+{
+	cSocket = new ClientSocket();
+	cSocket->AcceptConnection(lSocket->GetSocket());
+	if (cSocket->IsFailToAccept())
+	{
+		std::cout << "accept() error" << std::endl;
+		return;
+	}
+	inet_ntop(AF_INET, &cSocket->GetSockAddr()->sin_addr, addr, sizeof(addr));
+	std::cout << "Connected : ip = " << addr << ", port = " << ntohs(cSocket->GetSockAddr()->sin_port) << std::endl;
+}
+
+void ServerBase::Disconnect()
+{
+	std::cout<<"Disconnected : ip = " << addr << ", port = " << ntohs(cSocket->GetSockAddr()->sin_port) << std::endl;
+	delete cSocket;
+	//cSocket->~ClientSocket();	//call destructor to destroy object without release memory
 }

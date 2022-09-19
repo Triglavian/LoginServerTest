@@ -9,7 +9,7 @@ public:
 	~ClientSocket();
 	void AcceptConnection(const SOCKET lSocket);	//accept connection
 	bool IsFailToAccept();		//validate accept() result
-	sockaddr_in GetSockAddr();	//get client ip address
+	sockaddr_in* GetSockAddr();	//get client ip address
 	template <typename DATA>
 	void AddDataToPacket(DATA data);
 	int SendPacket();			//send packet to client
