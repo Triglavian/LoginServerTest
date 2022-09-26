@@ -4,12 +4,12 @@ ClientSocket::ClientSocket()
 {
 	socket = new SOCKET();
 	clientAddr = new sockaddr_in();
+	retval = 0;
 	addrLen = 0;
 }
 
 ClientSocket::~ClientSocket()
 {
-	std::cout << 1;
 	if (socket != nullptr) {
 		closesocket(*socket);
 		delete socket;
@@ -33,15 +33,9 @@ sockaddr_in* ClientSocket::GetSockAddr()	//get client ip address
 	return clientAddr;
 }
 
-template<typename DATA>
-void ClientSocket::AddDataToPacket(DATA data)
+int ClientSocket::SendPacket(const int flag)	//send packet to client
 {
-	//packetBuffer.append(typename)
-}
-
-int ClientSocket::SendPacket()	//send packet to client
-{
-	return send(*socket, packet.str().c_str(), packet.str().length(), 0);
+	return send(*socket, packet.GetPacket().c_str(), packet.GetPacket().length(), flag);
 }
 
 void ClientSocket::SetAddrLen()	//set client address object size to val

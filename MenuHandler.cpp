@@ -2,15 +2,21 @@
 
 MenuHandler::MenuHandler()
 {
-	menu = new MenuPrinter();
+	writePacket = nullptr;
+}
+
+MenuHandler::MenuHandler(std::function<void(std::string)> writePacketFunc)
+{
+	writePacket = writePacketFunc;
 }
 
 MenuHandler::~MenuHandler()
 {
-	if (menu != nullptr) delete menu;
+
 }
 
-void MenuHandler::PrintMenu(const int id)
+void MenuHandler::AddMenuToPacket(const MenuId index)
 {
-	menu->MenuList.at(id);	//??
+	writePacket(MenuDatas::GetMenuData(index));
 }
+

@@ -6,7 +6,7 @@ ServerBase::ServerBase()
 	lSocket = new ServerSocket();
 	cSocket = nullptr;
 	ZeroMemory(addr, sizeof(addr));
-	menuHandler = new MenuHandler();
+	menuHandler = nullptr;
 }
 
 ServerBase::~ServerBase()
@@ -19,6 +19,7 @@ ServerBase::~ServerBase()
 
 void ServerBase::Run()	//run server
 {
+	int index = 0;
 	if (!Initialization()) {
 		std::cout << "Server Initialization Failed" << std::endl;
 		return;
@@ -26,9 +27,8 @@ void ServerBase::Run()	//run server
 	while (1) 
 	{
 		Connect();
-
 		while (1) {
-
+			
 		}
 		Disconnect();
 	}
@@ -86,11 +86,12 @@ void ServerBase::Connect()
 	}
 	inet_ntop(AF_INET, &cSocket->GetSockAddr()->sin_addr, addr, sizeof(addr));
 	std::cout << "Connected : ip = " << addr << ", port = " << ntohs(cSocket->GetSockAddr()->sin_port) << std::endl;
+	menuHandler = new MenuHandler(std::bind(&PacketHandler::AddPacket, cSocket->packetHandler, std::placeholders::_1));
 }
 
 void ServerBase::Disconnect()
 {
 	std::cout<<"Disconnected : ip = " << addr << ", port = " << ntohs(cSocket->GetSockAddr()->sin_port) << std::endl;
 	delete cSocket;
-	//cSocket->~ClientSocket();	//call destructor to destroy object without release memory
+	cSocket->~ClientSocket();	//call destructor to destroy object without release memory
 }

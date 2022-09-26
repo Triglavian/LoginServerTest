@@ -1,13 +1,16 @@
 #pragma once
-#include "MenuPrinter.h"
+#include <string>
+#include <functional>
+#include "MenuId.h"
+#include "MenuDatas.h"
 
 class MenuHandler
 {
 public:
 	MenuHandler();
-	~MenuHandler();
-	void PrintMenu(const int id);
+	MenuHandler(std::function<void(std::string)> writePacketFunc);
+	~MenuHandler();	
+	void AddMenuToPacket(const MenuId);
 private:
-	MenuPrinter* menu;
+	std::function<void(std::string)> writePacket;
 };
-
