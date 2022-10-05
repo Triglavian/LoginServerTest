@@ -4,11 +4,28 @@ ServerSocket::ServerSocket()
 {
 	serverAddr = new sockaddr_in();
 	clientAddr = new sockaddr_in();
+<<<<<<< HEAD
+	listenSocket = new SOCKET();
+=======
 	listenSocket = new SOCKET;
+>>>>>>> 604e64e0f4b14d00cb05db5644417e816f477b25
 	cAddrSize = 0;
 	result = 0;
 }
 
+<<<<<<< HEAD
+ServerSocket::~ServerSocket()
+{
+	if (serverAddr != nullptr) delete serverAddr;
+	if (clientAddr != nullptr) delete clientAddr;
+	if (listenSocket != nullptr) {
+		closesocket(*listenSocket);
+		delete listenSocket;
+	}
+}
+
+=======
+>>>>>>> 604e64e0f4b14d00cb05db5644417e816f477b25
 bool ServerSocket::IsInvalidSock()
 {
 	*listenSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);	//linker error
