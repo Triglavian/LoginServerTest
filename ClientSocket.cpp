@@ -29,10 +29,10 @@ sockaddr_in ClientSocket::GetSockAddr()	//get client ip address
 	return *clientAddr;
 }
 
-template<typename DATA>
-void ClientSocket::AddDataToPacket(DATA data)
+template<class DataType>
+void ClientSocket::Packing(DataType data)
 {
-	//packetBuffer.append(typename)
+	
 }
 
 int ClientSocket::SendPacket()	//send packet to client
